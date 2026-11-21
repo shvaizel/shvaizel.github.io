@@ -1,0 +1,10 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["2SM27HLYPH.com.shay.pokerapp"],
+        "components": [{ "/": "/join/*", "comment": "קישורי הצטרפות לערב פוקר" }]
+      }
+    ]
+  }
+}

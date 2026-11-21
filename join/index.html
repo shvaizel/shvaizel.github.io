@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הזמנה לערב פוקר</title>
+<meta property="og:title" content="הזמנה לערב פוקר ♠️">
+<meta property="og:description" content="לוחצים, פותחים באפליקציה ומבקשים להצטרף.">
+<style>
+  :root { --bg: #14141a; --card: #1f1f28; --text: #ffffff; --muted: #b9b9c6; --accent: #2fbf71; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    display: flex; align-items: center; justify-content: center; padding: 24px 16px;
+  }
+  main { width: 100%; max-width: 420px; text-align: center; }
+  .cards { font-size: 64px; line-height: 1; margin-bottom: 12px; }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  p { color: var(--muted); font-size: 17px; line-height: 1.5; margin: 0 0 24px; }
+  .button {
+    display: block; width: 100%; padding: 16px; border-radius: 14px; border: 0;
+    background: var(--accent); color: #fff; font-size: 19px; font-weight: 700;
+    text-decoration: none; margin-bottom: 14px;
+  }
+  .card { background: var(--card); border-radius: 14px; padding: 16px; color: var(--muted); font-size: 15px; line-height: 1.5; }
+  .error { color: #ff9f43; }
+</style>
+</head>
+<body>
+<main>
+  <div class="cards">♠️♥️</div>
+  <h1>הוזמנת לערב פוקר!</h1>
+  <p id="lead">פותחים באפליקציה ומבקשים להצטרף. המארח מאשר, והתוצאה שלך מהערב נשמרת בהיסטוריה שלך.</p>
+  <a id="open" class="button" href="#">פתח באפליקציה</a>
+  <a id="store" class="button" href="#" style="display:none; background:#3a3a48">להורדת האפליקציה</a>
+  <div class="card">
+    מעבירים אותך להורדת האפליקציה. אחרי ההתקנה מתחברים עם Apple
+    וחוזרים ללחוץ על הקישור בקבוצה.
+  </div>
+</main>
+<script>
+  // קישור ההורדה: TestFlight ציבורי עכשיו, App Store אחרי השחרור.
+  var STORE_URL = "";
+
+  (function () {
+    var code = new URLSearchParams(location.search).get("c") || "";
+    var open = document.getElementById("open");
+    // רק קוד הקסדצימלי — שום דבר אחר לא נכנס לקישור.
+    if (!/^[0-9a-fA-F]{6,32}$/.test(code)) {
+      open.style.display = "none";
+      var lead = document.getElementById("lead");
+      lead.textContent = "הקישור לא תקין. בקש מהמארח לשלוח אותו שוב.";
+      lead.className = "error";
+      return;
+    }
+    var appURL = "pokerapp://join/" + code.toLowerCase();
+    open.href = appURL;
+    if (STORE_URL) {
+      var store = document.getElementById("store");
+      store.href = STORE_URL;
+      store.style.display = "block";
+    }
+    // אם האפליקציה מותקנת, הקישור (Universal Link) נפתח ישר בה והדף הזה
+    // לא נטען בכלל. הגענו לכאן = אין אפליקציה → ישר להורדה.
+    if (STORE_URL) location.replace(STORE_URL);
+  })();
+</script>
+</body>
+</html>
